@@ -12,6 +12,38 @@ $(function () {
     colors = ['red', 'yellow', 'purple', 'orange', 'green', 'blue', 'violet', 'cyan'];
     kinds = ['circle', 'square'];
 
+
+    var randomChoice = function (arr) {
+        index = Math.floor(Math.random() * arr.length);
+        return arr[index]
+    }
+
+    var getNextOuterColor = function (colors, lastColor, upColor) {
+        color = randomChoice(colors);
+        if (color === lastColor || color === upColor) {
+            return getNextOuterColor(colors, lastColor, upColor);
+        } else {
+            return color;
+        }
+    }
+
+    var generateOuterColors = function (colors, totalSquares, gridColumns) {
+        outerColors = [];
+        lastColor = null;
+        upColor = null;
+        for (var i = 0; i < totalSquares; i++) {
+            if (i > 0) {
+                lastColor = outerColors[outerColors.length - 1];
+            };
+            if (i >= gridColumns) {
+                upColor = outerColors[i - gridColumns];
+            };
+            nextOuterColor = getNextOuterColor(colors, lastColor, upColor);
+            outerColors[outerColors.length] = nextOuterColor;
+        };
+        return outerColors;
+    }
+
     var generateColorArray = function (rowWidth, totalSquares) {
         colorArray = [];
         lastColor = null;
@@ -60,7 +92,7 @@ $(function () {
 
     var generate = function() {
         $("#grid").css("max-width", maxWidth);
-        colorArray = generateColorArray(gridRows, totalSquares);
+        colorArray = generateColorArray(gridColumns, totalSquares);
         for (var i = 0; i < totalSquares; i++) {
 
             cell = createSquare(i, colorArray);
