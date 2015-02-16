@@ -76,6 +76,7 @@ $(function () {
     };
 
     var generate = function() {
+        $("#grid").empty();
         $("#grid").css("max-width", maxWidth);
         outerColors = generateOuterColors(colors, totalSquares, gridColumns);
         innerColors = generateInnerColors(outerColors);
@@ -88,4 +89,6 @@ $(function () {
     };
 
     generate();
+
+    $("#grid").on("click", generate);
 });
