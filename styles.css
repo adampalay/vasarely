@@ -1,0 +1,8 @@
+.cell {
+    float: left;
+    width: 100px;
+    height: 100px;
+}
+#grid {
+    max-width: 600px;
+}
