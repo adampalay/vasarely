@@ -92,15 +92,18 @@ $(function () {
         };
     };
 
-
-    $("#all").click(function () {
-        event.preventDefault();
+    var checkAllBoxes = function () {
         var colorCheckBoxes = $("input[name=color]");
         for (var i = 0; i < colorCheckBoxes.length; i++) {
-            if (!colorCheckBoxes[i].checked) {
-                colorCheckBoxes[i].click();
-            };
+            colorCheckBoxes[i].checked = true;
         };
+    };
+
+
+    $("#all").click(function (event) {
+        event.preventDefault();
+        checkAllBoxes();
+
     });
 
     $("#generate").on("click", function(event){
@@ -128,7 +131,7 @@ $(function () {
         };
     });
 
-    $("input[name=color]").click();
+    checkAllBoxes();
 
     generate(colors, gridRows, gridColumns);
 
