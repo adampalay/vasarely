@@ -75,9 +75,13 @@ $(function () {
         return cell
     };
 
-    var generate = function() {
+    var generate = function(colors, gridRows, gridColumns) {
+        maxWidth = squareSize * gridColumns;
         $("#grid").empty();
         $("#grid").css("max-width", maxWidth);
+        $('input[value="rows"]').val(gridRows);
+        $('input[value="columns"]').val(gridColumns);
+        totalSquares = gridRows * gridColumns;
         outerColors = generateOuterColors(colors, totalSquares, gridColumns);
         innerColors = generateInnerColors(outerColors);
         for (var i = 0; i < totalSquares; i++) {
@@ -88,7 +92,43 @@ $(function () {
         };
     };
 
-    generate();
 
-    $("#grid").on("click", generate);
+    $("#all").click(function () {
+        event.preventDefault();
+        var colorCheckBoxes = $("input[name=color]");
+        for (var i = 0; i < colorCheckBoxes.length; i++) {
+            if (!colorCheckBoxes[i].checked) {
+                colorCheckBoxes[i].click();
+            };
+        };
+    });
+
+    $("#generate").on("click", function(event){
+        event.preventDefault();
+        var colors = []
+        var colorCheckBoxes = $("input[name=color]");
+        for (var i = 0; i < colorCheckBoxes.length; i++) {
+            if (colorCheckBoxes[i].checked) {
+                colors[colors.length] = colorCheckBoxes[i].value;
+            };
+        };
+        rawRows = $('input[value="rows"]').val();
+        rawColumns = $('input[value="columns"]').val();
+
+        gridRows = parseInt(rawRows);
+        gridColumns = parseInt(rawColumns);
+
+        if (gridRows.toString() === "NaN" || gridColumns.toString() === "NaN") {
+            alert("Please enter integer amounts for rows and columns")
+        } else if (colors.length < 3) {
+            alert("Need at least three colors selected")
+        } else {
+            generate(colors, gridRows, gridColumns);
+        };
+    });
+
+    $("input[name=color]").click();
+
+    generate(colors, gridRows, gridColumns);
+
 });
