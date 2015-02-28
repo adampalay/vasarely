@@ -4,7 +4,7 @@ $(function () {
         gridColumns = 6,
         squareSize = 100,
         maxWidth = squareSize * gridColumns,
-        colors = ['red', 'yellow', 'purple', 'orange', 'green', 'blue', 'violet', 'cyan'],
+        colors = ['red', 'yellow', 'purple', 'orange', 'green', 'blue', 'violet'],
         kinds = ['circle', 'square'];
 
     var randomChoice = function (arr) {
